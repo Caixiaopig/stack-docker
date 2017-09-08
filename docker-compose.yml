@@ -18,19 +18,19 @@ services:
   #   ELASTIC_VERSION=5.4.0 TAG=5.4.0-a80c820b docker-compose up
   #
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:elasticsearch-5.5.2
     environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1']
     ports: ['127.0.0.1:9200:9200']
     networks: ['stack']
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:kibana-5.5.2
     ports: ['127.0.0.1:5601:5601']
     networks: ['stack']
     depends_on: ['elasticsearch']
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:logstash-5.5.2
     # Provide a simple pipeline configuration for Logstash with a bind-mounted file.
     volumes:
       - ./config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
@@ -38,7 +38,7 @@ services:
     depends_on: ['elasticsearch']
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:filebeat-5.5.2
     # If the host system has logs at "/var/log", mount them at "/mnt/log"
     # inside the container, where Filebeat can find them.
     # volumes: ['/var/log:/mnt/log:ro']
@@ -46,12 +46,12 @@ services:
     depends_on: ['elasticsearch']
 
   heartbeat:
-    image: docker.elastic.co/beats/heartbeat:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:heartbeat-5.5.2
     networks: ['stack']
     depends_on: ['elasticsearch']
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:metricbeat-5.5.2
     # The commented sections below enable Metricbeat to monitor the Docker host,
     # rather than the Metricbeat container. It's problematic with Docker for
     # Windows, however, since "/proc", "/sys" etc. don't exist on Windows.
@@ -65,7 +65,7 @@ services:
     depends_on: ['elasticsearch']
 
   packetbeat:
-    image: docker.elastic.co/beats/packetbeat:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:packetbeat-5.5.2
     # Packetbeat needs some elevated privileges to capture network traffic.
     # We'll grant them with POSIX capabilities.
     cap_add: ['NET_RAW', 'NET_ADMIN']
