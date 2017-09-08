@@ -83,7 +83,7 @@ services:
   # Run a short-lived container to set up Kibana index patterns and dashboards.
   configure_kibana:
     # Any Beats image will suffice. We'll use Metricbeat.
-    image: docker.elastic.co/beats/metricbeat:${TAG}
+    image: registry.cn-hangzhou.aliyuncs.com/moore/tech:metricbeat-5.5.2
     volumes: ['./scripts/configure-kibana.sh:/usr/local/bin/configure-kibana.sh:ro']
     # The script may have CR/LF linefeeds if using Docker for Windows, so make
     # sure that they don't confuse Bash.
